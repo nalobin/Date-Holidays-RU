@@ -1,0 +1,14 @@
+---
+name: Date-Holidays-RU
+version: 0.01
+author:
+  - Alexander Nalobin <alexander@nalobin.ru>
+abstract: Determine Russian Federation holidays and business days
+license: perl
+build_requires:
+  Test::More: 0
+provides:
+  Date::Holidays::RU:
+    file: lib/Date/Holidays/RU.pm
+    version: 0.01
+generated_by: Module::Build version 0.2611
