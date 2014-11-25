@@ -9,3 +9,4 @@ t/holidays.t
 t/business_days.t
 t/pod.t
 META.yml
+META.json

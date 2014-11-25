@@ -35,7 +35,7 @@ use strict;
 use utf8;
 use base 'Exporter';
 use vars qw/$VERSION @EXPORT_OK/;
-$VERSION = '0.01';
+$VERSION = '0.02';
 @EXPORT_OK = qw( is_holiday is_ru_holiday holidays is_business_day );
 
 use Time::Piece;
