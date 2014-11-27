@@ -150,7 +150,7 @@ sub is_business_day {
 
 =head1 AUTHOR
 
-Alexander Nalobin, C<< <alexaner at nalobin.ru> >>
+Alexander Nalobin, C<< <alexander at nalobin.ru> >>
 
 =cut
 
