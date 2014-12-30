@@ -10,6 +10,17 @@ WriteMakefile
                  },
   'INSTALLDIRS' => 'site',
   'EXE_FILES' => [],
-  'PL_FILES' => {}
+  'PL_FILES' => {},
+
+    META_MERGE => {
+        'meta-spec' => { version => 2 },
+         resources => {
+             repository => {
+                 type => 'git',
+                 url  => 'https://github.com/nalobin/Date-Holidays-RU.git',
+                 web  => 'https://github.com/nalobin/Date-Holidays-RU'
+             },
+         },
+    },
 )
 ;
