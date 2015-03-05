@@ -36,18 +36,24 @@ use utf8;
 use base 'Exporter';
 use vars qw/$VERSION @EXPORT_OK/;
 $VERSION = '0.03';
-@EXPORT_OK = qw( is_holiday is_ru_holiday holidays is_business_day );
+@EXPORT_OK = qw(
+    is_holiday
+    is_ru_holiday
+    holidays
+    is_business_day
+    is_short_business_day
+);
 
 use Time::Piece;
 
 # this list is not valid before 2005
 my %HOLIDAYS_YEARLY = (
-    '0101' => 'Новый год',
+    '0101' => 'Новогодние каникулы',
     '0102' => 'Новогодние каникулы',
     '0103' => 'Новогодние каникулы',
     '0104' => 'Новогодние каникулы',
     '0105' => 'Новогодние каникулы',
-    '0106' => 'Новогодние каникулы', # not an official holiday, but extra day-off every year
+    '0106' => 'Новогодние каникулы',
     '0107' => 'Рождество Христово',
     '0108' => 'Новогодние каникулы',
     '0223' => 'День защитника Отечества',
@@ -85,7 +91,7 @@ my %BUSINESS_DAYS_ON_WEEKENDS = (
     2015 => [], # woohoo 
 );
 
-my %SHORT_WORK_DAYS = (
+my %SHORT_BUSINESS_DAYS = (
     2005 => [ qw( 0222 0305 1103 ) ],
     2006 => [ qw( 0222 0307 0506 1103 ) ],
     2007 => [ qw( 0222 0307 0428 0508 0609 ) ],
@@ -179,6 +185,23 @@ sub is_business_day {
 
     0;
 }
+
+=head2 is_short_business_day( $year, $month, $day )
+
+Returns true if date is a shortened business day in RU.
+
+=cut
+
+sub is_short_business_day {
+    my ( $year, $month, $day ) = @_;
+
+    my $short_days = $SHORT_BUSINESS_DAYS{$year};
+    return ''  if !$short_days;
+
+    my $date_key = sprintf '%02d%02d', $month, $day;
+    return !!grep {$_ eq $date_key} @$short_days;
+}
+
 
 
 =head1 AUTHOR
