@@ -28,6 +28,11 @@ Date::Holidays::RU - Determine Russian Federation official holidays and business
     if ( is_business_day( 2012, 03, 11 ) ) {
         print "2012-03-11 is business day on weekend\n";
     }
+
+    if ( is_short_business_day( 2015, 04, 30 ) ) {
+        print "2015-04-30 is short business day\n";
+    }
+
 =cut
 
 use warnings;
@@ -195,14 +200,11 @@ Returns true if date is a shortened business day in RU.
 sub is_short_business_day {
     my ( $year, $month, $day ) = @_;
 
-    my $short_days = $SHORT_BUSINESS_DAYS{$year};
-    return ''  if !$short_days;
+    my $short_days_ref = $SHORT_BUSINESS_DAYS{ $year } or return 0;
 
     my $date_key = sprintf '%02d%02d', $month, $day;
-    return !!grep {$_ eq $date_key} @$short_days;
+    return !!grep { $_ eq $date_key } @$short_days_ref;
 }
-
-
 
 =head1 AUTHOR
 
