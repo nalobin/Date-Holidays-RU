@@ -35,11 +35,18 @@ use strict;
 use utf8;
 use base 'Exporter';
 use vars qw/$VERSION @EXPORT_OK/;
-$VERSION = '0.02';
-@EXPORT_OK = qw( is_holiday is_ru_holiday holidays is_business_day );
+$VERSION = '0.03';
+@EXPORT_OK = qw(
+    is_holiday
+    is_ru_holiday
+    holidays
+    is_business_day
+    is_short_business_day
+);
 
 use Time::Piece;
 
+# this list is not valid before 2005
 my %HOLIDAYS_YEARLY = (
     '0101' => 'Новогодние каникулы',
     '0102' => 'Новогодние каникулы',
@@ -58,14 +65,46 @@ my %HOLIDAYS_YEARLY = (
 );
 
 my %HOLIDAYS_SPECIAL = (
+    2005 => [ qw( 0110 0307 0502 0613 ) ],
+    2006 => [ qw( 0109 0224 0508 1106 ) ],
+    2007 => [ qw( 0430 0611 1105 1231 ) ],
+    2008 => [ qw( 0225 0310 0502 0613 1103 ) ],
+    2009 => [ qw( 0109 0309 0511 ) ],
+    2010 => [ qw( 0222 0503 0510 0614 1105 ) ],
+    2011 => [ qw( 0110 0307 0502 0613 ) ],
+    2012 => [ qw( 0109 0309 0430 0507 0508 0611 1105 1231 ) ],
+    2013 => [ qw( 0502 0503 0510 ) ],
     2014 => [ qw( 0310 0502 0613 1103 ) ],
-    2015 => [ qw( 0109 0309 0504 ) ],
+    2015 => [ qw( 0109 0309 0504 0511 ) ],
+    2016 => [ qw( 0222 0307 0502 0613 ) ],
+    2017 => [ qw( 0109 0508 1106 ) ],
 );
 
 my %BUSINESS_DAYS_ON_WEEKENDS = (
-    2012 => [ '0311' ], # for test
+    2006 => [ qw( 0226 ) ],
+    2007 => [ qw( 1229 ) ],
+    2008 => [ qw( 0504 0607 ) ],
+    2009 => [ qw( 0111 ) ],
+    2010 => [ qw( 1113 ) ],
+    2012 => [ qw( 0311 0505 ) ],
     2014 => [], # woohoo 
     2015 => [], # woohoo 
+);
+
+my %SHORT_BUSINESS_DAYS = (
+    2005 => [ qw( 0222 0305 1103 ) ],
+    2006 => [ qw( 0222 0307 0506 1103 ) ],
+    2007 => [ qw( 0222 0307 0428 0508 0609 ) ],
+    2008 => [ qw( 0222 0307 0430 0508 0611 1101 1231 ) ],
+    2009 => [ qw( 0430 0508 0611 1103 1231 ) ],
+    2010 => [ qw( 0227 0430 0611 1103 1231 ) ],
+    2011 => [ qw( 0222 0305 1103 ) ],
+    2012 => [ qw( 0222 0307 0428 0512 0609 1229 ) ],
+    2013 => [ qw( 0222 0307 0430 0508 0611 1231 ) ],
+    2014 => [ qw( 0224 0307 0430 0508 0611 1231 ) ],
+    2015 => [ qw( 0430 0508 0611 1103 1231 ) ],
+    2016 => [ qw( 0227 0305 1103 ) ],
+    2017 => [ qw( 0222 0307 0506 1103 ) ],
 );
 
 
@@ -146,6 +185,23 @@ sub is_business_day {
 
     0;
 }
+
+=head2 is_short_business_day( $year, $month, $day )
+
+Returns true if date is a shortened business day in RU.
+
+=cut
+
+sub is_short_business_day {
+    my ( $year, $month, $day ) = @_;
+
+    my $short_days = $SHORT_BUSINESS_DAYS{$year};
+    return ''  if !$short_days;
+
+    my $date_key = sprintf '%02d%02d', $month, $day;
+    return !!grep {$_ eq $date_key} @$short_days;
+}
+
 
 
 =head1 AUTHOR
