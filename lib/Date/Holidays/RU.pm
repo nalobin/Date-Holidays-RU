@@ -1,10 +1,12 @@
 package Date::Holidays::RU;
 
+# ABSTRACT: Determine Russian Federation official holidays and business days.
+
 =encoding utf8
 
 =head1 NAME
 
-Date::Holidays::RU - Determine Russian Federation official holidays and business days.
+Date::Holidays::RU
 
 =head1 SYNOPSIS
 
@@ -39,8 +41,7 @@ use warnings;
 use strict;
 use utf8;
 use base 'Exporter';
-use vars qw/$VERSION @EXPORT_OK/;
-$VERSION = '0.03';
+use vars qw/@EXPORT_OK/;
 @EXPORT_OK = qw(
     is_holiday
     is_ru_holiday
