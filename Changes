@@ -1,6 +1,9 @@
 Revision history for Date-Holidays-RU
 
-0.03    04 Mar  2015 liosha
+0.04    18 Mar  2015 Aleksey Korabelshchikov
+        Complete holidays data since 1991
+
+0.03    04 Mar  2015 Aleksey Korabelshchikov
         Data for 2005-2017.
         is_short_business_day() sub added.
 
