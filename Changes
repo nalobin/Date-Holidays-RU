@@ -1,5 +1,10 @@
 Revision history for Date-Holidays-RU
 
+1.2016.0    09 Nov 2015 Aleksey Korabelshchikov
+        New version schema
+        2016 data update
+        Business days on weekend data fix
+
 0.04    18 Mar  2015 Aleksey Korabelshchikov
         Complete holidays data since 1991
 

@@ -159,18 +159,22 @@ my %HOLIDAYS_SPECIAL = (
     2013 => [ qw( 0502 0503 0510 ) ],
     2014 => [ qw( 0310 0502 0613 1103 ) ],
     2015 => [ qw( 0109 0309 0504 0511 ) ],
-    2016 => [ qw( 0222 0307 0502 0613 ) ],
+    2016 => [ qw( 0222 0307 0502 0503 0613 ) ],
     2017 => [ qw( 0109 0508 1106 ) ],
 );
 
 
 my %BUSINESS_DAYS_ON_WEEKENDS = (
-    2006 => [ qw( 0226 ) ],
-    2007 => [ qw( 1229 ) ],
-    2008 => [ qw( 0504 0607 ) ],
+    2005 => [ qw( 0305 ) ],
+    2006 => [ qw( 0226 0506 ) ],
+    2007 => [ qw( 0428 0609 1229 ) ],
+    2008 => [ qw( 0504 0607 1101 ) ],
     2009 => [ qw( 0111 ) ],
-    2010 => [ qw( 1113 ) ],
-    2012 => [ qw( 0311 0505 ) ],
+    2010 => [ qw( 0227 1113 ) ],
+    2011 => [ qw( 0305 ) ],
+    2012 => [ qw( 0311 0428 0505 0512 0609 1229 ) ],
+    2016 => [ qw( 0220 ) ],
+    2017 => [ qw( 0506 ) ],
 );
 
 my %SHORT_BUSINESS_DAYS = (
@@ -186,7 +190,7 @@ my %SHORT_BUSINESS_DAYS = (
     2013 => [ qw( 0222 0307 0430 0508 0611 1231 ) ],
     2014 => [ qw( 0224 0307 0430 0508 0611 1231 ) ],
     2015 => [ qw( 0430 0508 0611 1103 1231 ) ],
-    2016 => [ qw( 0227 0305 1103 ) ],
+    2016 => [ qw( 0220 1103 ) ],
     2017 => [ qw( 0222 0307 0506 1103 ) ],
 );
 
@@ -202,9 +206,7 @@ sub is_holiday {
 
     croak 'Bad params'  unless $year && $month && $day;
 
-    $_ = '0' . $_  for grep { length == 1 } $month, $day;
-
-    return holidays( $year )->{ $month . $day };
+    return holidays( $year )->{ _get_date_key($month, $day) };
 }
 
 =head2 is_ru_holiday( $year, $month, $day )
@@ -279,8 +281,6 @@ sub is_business_day {
 
     croak 'Bad params'  unless $year && $month && $day;
 
-    $_ = '0' . $_  for grep { length == 1 } $month, $day;
-
     return 0  if is_holiday( $year, $month, $day );
 
     # check if date is a weekend
@@ -291,7 +291,7 @@ sub is_business_day {
     # check if date is a business day on weekend
     my $ref = $BUSINESS_DAYS_ON_WEEKENDS{ $year } or return 0;
 
-    my $md = $month . $day;
+    my $md = _get_date_key($month, $day);
     for ( @$ref ) {
         return 1  if $_ eq $md;
     }
@@ -310,8 +310,14 @@ sub is_short_business_day {
 
     my $short_days_ref = $SHORT_BUSINESS_DAYS{ $year } or return 0;
 
-    my $date_key = sprintf '%02d%02d', $month, $day;
+    my $date_key = _get_date_key($month, $day);
     return !!grep { $_ eq $date_key } @$short_days_ref;
+}
+
+
+sub _get_date_key {
+    my ($month, $day) = @_;
+    return sprintf '%02d%02d', $month, $day;
 }
 
 =head1 AUTHOR
