@@ -59,6 +59,7 @@ my $HOLIDAYS_VALID_SINCE = 1991;
 #my $BUSINESS_DAYS_VALID_SINCE = 2004;
 
 # sources:
+#   http://www.consultant.ru/law/ref/calendar/proizvodstvennye/
 #   http://ru.wikipedia.org/wiki/История_праздников_России
 #   http://www.consultant.ru/popular/kzot/54_6.html#p530
 #   http://www.consultant.ru/document/cons_doc_LAW_127924/?frame=17#p1681
@@ -163,6 +164,7 @@ my %HOLIDAYS_SPECIAL = (
     2017 => [ qw( 0224 0508 1106 ) ],
     2018 => [ qw( 0309 0430 0502 0611 1105 1231 ) ],
     2019 => [ qw( 0502 0503 0510 ) ],
+    2020 => [ qw( 0224 0309 0504 0505 ) ],
 );
 
 
@@ -196,6 +198,7 @@ my %SHORT_BUSINESS_DAYS = (
     2017 => [ qw( 0222 0307 1103 ) ],
     2018 => [ qw( 0222 0307 0428 0508 0609 1229 ) ],
     2019 => [ qw( 0222 0307 0430 0508 0611 1231 ) ],
+    2020 => [ qw( 0430 0508 0611 1103 1231 ) ],
 );
 
 
